@@ -5,13 +5,18 @@ import 'package:ecommerce_refuerzo_bloc/widgets/app_primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Productidget extends StatelessWidget {
-  const Productidget({super.key});
+class ProductWidget extends StatelessWidget {
+  const ProductWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+      padding: const EdgeInsets.fromLTRB(
+        16,
+        16,
+        16,
+        0,
+      ),
       child: BlocBuilder<EcommerceBloc, EcommerceState>(
         builder: (context, state) {
           if (state.homeScreenState == HomeScreenState.loading) {
@@ -25,7 +30,7 @@ class Productidget extends StatelessWidget {
               crossAxisCount: 2,
               crossAxisSpacing: 10,
               mainAxisSpacing: 10,
-              childAspectRatio: 0.7,
+              childAspectRatio: 0.8,
             ),
             itemBuilder: (context, index) {
               final product = state.products[index];
@@ -49,35 +54,36 @@ class Productidget extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: 160,
-          padding: const EdgeInsets.all(16),
+          height: 120,
           decoration: BoxDecoration(
             color: AppColors.lightgrey,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Image.network(product.imageUrl),
         ),
+        const SizedBox(height: 4),
         Text(
           product.title,
           style: TextStyle(
             color: AppColors.black,
             fontSize: 12,
-            fontWeight: FontWeight.w400,
           ),
         ),
+        const SizedBox(height: 4),
         Text(
           "\$${product.amount}",
           style: TextStyle(
             color: AppColors.black,
-            fontSize: 14,
             fontWeight: FontWeight.w500,
           ),
         ),
         AppPrimaryButton(
           onTap: () {
-            context.read<EcommerceBloc>().add(AddToCartEvent(
-                  product: product,
-                ));
+            context.read<EcommerceBloc>().add(
+                  AddToCartEvent(
+                    product: product,
+                  ),
+                );
           },
           text: "Add to cart",
           fontSizeButton: 12,

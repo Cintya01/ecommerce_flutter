@@ -12,11 +12,10 @@ class EcommerceState extends Equatable {
   final List<ProductModel> cart;
   final HomeScreenState homeScreenState;
 
-  const EcommerceState({
-    required this.products,
-    required this.cart,
-    required this.homeScreenState,
-  });
+  const EcommerceState(
+      {required this.products,
+      required this.cart,
+      required this.homeScreenState});
 
   factory EcommerceState.initial() {
     return const EcommerceState(
@@ -32,8 +31,8 @@ class EcommerceState extends Equatable {
     HomeScreenState? homeScreenState,
   }) {
     return EcommerceState(
-      products: products ?? this.products,
       cart: cart ?? this.cart,
+      products: products ?? this.products,
       homeScreenState: homeScreenState ?? this.homeScreenState,
     );
   }

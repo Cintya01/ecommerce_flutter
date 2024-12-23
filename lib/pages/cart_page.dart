@@ -118,14 +118,18 @@ class CartPage extends StatelessWidget {
                   return const SizedBox.shrink();
                 }
                 final product = state.cart[index];
-                return _buildCardItem(product);
+                return _buildCardItem(
+                  context: context,
+                  product: product,
+                );
               },
             ));
       },
     );
   }
 
-  _buildCardItem(ProductModel product) {
+  _buildCardItem(
+      {required ProductModel product, required BuildContext context}) {
     return Container(
       height: 130,
       width: double.infinity,
@@ -140,8 +144,12 @@ class CartPage extends StatelessWidget {
       child: Row(
         children: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.delete_sweep_rounded),
+            onPressed: () {
+              context
+                  .read<EcommerceBloc>()
+                  .add((RemoveFromCartEvent(product: product)));
+            },
+            icon: const Icon(Icons.delete),
             color: AppColors.red,
           ),
           Container(
@@ -187,7 +195,10 @@ class CartPage extends StatelessWidget {
                             radius: 14,
                             backgroundColor: AppColors.lightgrey,
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context.read<EcommerceBloc>().add(
+                                    DecreaseQuantityEvent(product: product));
+                              },
                               icon: const Icon(Icons.remove),
                               color: AppColors.black,
                               iconSize: 14,
@@ -203,7 +214,10 @@ class CartPage extends StatelessWidget {
                             radius: 14,
                             backgroundColor: AppColors.lightgrey,
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context.read<EcommerceBloc>().add(
+                                    IncreaseQuantityEvent(product: product));
+                              },
                               icon: const Icon(Icons.add),
                               color: AppColors.black,
                               iconSize: 14,

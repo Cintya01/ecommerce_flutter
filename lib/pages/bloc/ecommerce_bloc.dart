@@ -12,7 +12,9 @@ class EcommerceBloc extends Bloc<EcommerceEvent, EcommerceState> {
   EcommerceBloc() : super(EcommerceState.initial()) {
     on<LoadProductsEvent>(_onLoadProductsEvent);
     on<AddToCartEvent>(_onAddToCartEvent);
-    on<UpdateQuantityEvent>(_onUpdateQuantityEvent);
+    //on<UpdateCartQuantityEvent>(_onUpdateQuantityEvent);
+    on<IncreaseQuantityEvent>(_onIncreaseQuantityEvent);
+    on<DecreaseQuantityEvent>(_onDecreaseQuantityEvent);
     on<RemoveFromCartEvent>(_onRemoveFromCartEvent);
   }
 
@@ -38,59 +40,59 @@ class EcommerceBloc extends Bloc<EcommerceEvent, EcommerceState> {
   }
 
   void _onAddToCartEvent(AddToCartEvent event, Emitter<EcommerceState> emit) {
-    final List<ProductModel> newCart = [];
+    final exist = state.cart.firstWhere(
+      (p) => p.id == event.product.id,
+      orElse: () => event.product.copyWith(quantity: 0),
+    );
 
-    // final exist = state.cart.firstWhere(
-    //   (p) => p.id == event.product.id,
-    //   orElse: () => event.product.copyWith(quantity: 0),
-    // );
+    final updateCart = state.cart.map((p) {
+      if (p.id == event.product.id) {
+        return p.copyWith(quantity: p.quantity + 1);
+      }
+      return p;
+    }).toList();
 
-    // final updateCart = state.cart.map((p) {
-    //   if (p.id == event.product.id) {
-    //     return p.copyWith(quantity: p.quantity + 1);
-    //   }
-    //   return p;
-    // }).toList();
-
-    // if (exist.quantity == 0) {
-    //   updateCart.add(event.product.copyWith(quantity: 1));
-    // }
-    newCart.add(event.product);
-
-    emit(state.copyWith(cart: newCart));
-    log(state.cart.toString());
-    log(state.cart.length.toString());
+    if (exist.quantity == 0) {
+      updateCart.add(
+        event.product.copyWith(quantity: 1),
+      );
+    }
+    emit(state.copyWith(cart: updateCart));
   }
 
-  // void _onAddToCartEvent(AddToCartEvent event, Emitter<EcommerceState> emit) {
-  //   // Crea una copia del carrito existente.
-  //   final List<ProductModel> newCart = List.from(state.cart);
-
-  //   // Verifica si el producto ya existe en el carrito.
-  //   final productIndex = newCart.indexWhere((p) => p.id == event.product.id);
-
-  //   if (productIndex != -1) {
-  //     // Si ya existe, actualiza su cantidad.
-  //     final updatedProduct = newCart[productIndex].copyWith(
-  //       quantity: newCart[productIndex].quantity + 1,
-  //     );
-  //     newCart[productIndex] = updatedProduct;
-  //   } else {
-  //     // Si no existe, agrega el producto con cantidad inicial 1.
-  //     newCart.add(event.product.copyWith(quantity: 1));
-  //   }
-
-  //   // Emite el nuevo estado con el carrito actualizado.
-  //   emit(state.copyWith(cart: newCart));
-
-  //   // Logs para depuración.
-  //   log("Carrito actualizado: ${state.cart}");
-  //   log("Cantidad de productos en el carrito: ${state.cart.length}");
+  // void _onUpdateQuantityEvent(
+  //     UpdateCartQuantityEvent event, Emitter<EcommerceState> emit) {
   // }
 
-  void _onUpdateQuantityEvent(
-      UpdateQuantityEvent event, Emitter<EcommerceState> emit) {}
+  void _onIncreaseQuantityEvent(
+      IncreaseQuantityEvent event, Emitter<EcommerceState> emit) {
+    final updateCart = state.cart.map((p) {
+      if (p.id == event.product.id) {
+        return p.copyWith(quantity: p.quantity + 1);
+      }
+      return p;
+    }).toList();
+
+    emit(state.copyWith(cart: updateCart));
+  }
+
+  void _onDecreaseQuantityEvent(
+      DecreaseQuantityEvent event, Emitter<EcommerceState> emit) {
+    final updateCart = state.cart.map((p) {
+      if (p.id == event.product.id && p.quantity > 1) {
+        return p.copyWith(quantity: p.quantity - 1);
+      }
+      return p;
+    }).toList();
+
+    emit(state.copyWith(cart: updateCart));
+  }
 
   void _onRemoveFromCartEvent(
-      RemoveFromCartEvent event, Emitter<EcommerceState> emit) {}
+      RemoveFromCartEvent event, Emitter<EcommerceState> emit) {
+    final updateCart =
+        state.cart.where((p) => p.id != event.product.id).toList();
+    log(updateCart.toString());
+    emit(state.copyWith(cart: updateCart));
+  }
 }

@@ -7,18 +7,29 @@ sealed class EcommerceEvent extends Equatable {
   List<Object> get props => [];
 }
 
-//evento para cargar los productos al carrito
 class LoadProductsEvent extends EcommerceEvent {}
 
-//evento para agregar los productos al carrito
 class AddToCartEvent extends EcommerceEvent {
   final ProductModel product;
 
   const AddToCartEvent({required this.product});
 }
 
-//evento para actualizar cantidad de productos al carrito
-class UpdateQuantityEvent extends EcommerceEvent {}
+//class UpdateCartQuantityEvent extends EcommerceEvent {}
+class IncreaseQuantityEvent extends EcommerceEvent {
+  final ProductModel product;
 
-//evento para remover los productos al carrito
-class RemoveFromCartEvent extends EcommerceEvent {}
+  const IncreaseQuantityEvent({required this.product});
+}
+
+class DecreaseQuantityEvent extends EcommerceEvent {
+  final ProductModel product;
+
+  const DecreaseQuantityEvent({required this.product});
+}
+
+class RemoveFromCartEvent extends EcommerceEvent {
+  final ProductModel product;
+
+  const RemoveFromCartEvent({required this.product});
+}

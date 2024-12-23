@@ -20,8 +20,7 @@ class ProductModel extends Equatable {
       String? title,
       double? amount,
       String? imageUrl,
-      int? quantity,
-      bool? addedToCart}) {
+      int? quantity}) {
     return ProductModel(
       id: id ?? this.id,
       title: title ?? this.title,

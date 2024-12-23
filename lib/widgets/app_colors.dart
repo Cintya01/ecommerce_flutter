@@ -7,7 +7,7 @@ class AppColors {
   static Color white = const Color(0xFFffffff);
   static Color grey = const Color(0xFFaaafb2);
   static Color aquamarine = const Color(0xFF96d1c7);
-  static Color red = Colors.red;
+  static Color red = const Color(0xffb11e34);
 }
 
 

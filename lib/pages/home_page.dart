@@ -11,8 +11,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => EcommerceBloc()..add(LoadProductsEvent()),
+    return BlocProvider.value(
+      value: context.read<EcommerceBloc>()..add(LoadProductsEvent()),
       child: const Body(),
     );
   }
@@ -85,7 +85,7 @@ class Body extends StatelessWidget {
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20), topRight: Radius.circular(20))),
           child: const Column(
-            children: [CategoriesWidget(), Expanded(child: Productidget())],
+            children: [CategoriesWidget(), Expanded(child: ProductWidget())],
           ),
         ));
   }
