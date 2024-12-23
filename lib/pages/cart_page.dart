@@ -1,47 +1,142 @@
+import 'dart:developer';
+
 import 'package:ecommerce_refuerzo_bloc/model/product_model.dart';
 import 'package:ecommerce_refuerzo_bloc/pages/bloc/ecommerce_bloc.dart';
 import 'package:ecommerce_refuerzo_bloc/widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 
 class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double heightDirectionContainer = size.height * 0.1;
+
+    return Scaffold(
+      backgroundColor: AppColors.lightgrey,
+      appBar: AppBar(
+        backgroundColor: AppColors.white,
+        title: const Text(
+          "Cart",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        ),
+        actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 16),
+            child: CircleAvatar(
+              backgroundColor: AppColors.lightgrey,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Image(
+                  image: const Svg("assets/icons/menu-puntos.svg"),
+                  color: AppColors.black,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          Container(
+            height: heightDirectionContainer,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
+            ),
+          ),
+          Container(
+            height: heightDirectionContainer * 0.7,
+            margin: const EdgeInsets.only(
+              top: 8,
+              right: 16,
+              left: 16,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.lightgrey,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.location_on_outlined,
+                        color: AppColors.grey,
+                      ),
+                      const SizedBox(width: 8),
+                      const Text(
+                        "92 High Street, London",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 13),
+                      ),
+                    ],
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: AppColors.grey,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: heightDirectionContainer * 0.7 + 30),
+            child: _cartSection(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _cartSection() {
     return BlocBuilder<EcommerceBloc, EcommerceState>(
       builder: (context, state) {
         return Container(
-          color: AppColors.lightgrey,
-          child: Column(
-            children: [
-              _buildCardItem(),
-            ],
-          ),
-        );
-        // return ListView.builder(
-        //     itemCount: state.cart.length,
-        //     itemBuilder: (context, index) {
-        //       if (state.cart.isEmpty) {
-        //         return Center(
-        //           child: Text("No items in cart",
-        //               style: TextStyle(color: AppColors.black)),
-        //         );
-        //       }
-        //       final product = state.cart[index];
-        //       return _buildCardItem(product);
-        //     }
-        //     );
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
+            child: ListView.builder(
+              itemCount: state.cart.length,
+              itemBuilder: (context, index) {
+                log("Estado del carrito en el BlocBuilder Cart Page: ${state.cart.length}");
+                if (state.cart.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+                final product = state.cart[index];
+                return _buildCardItem(product);
+              },
+            ));
       },
     );
   }
 
-  _buildCardItem() {
+  _buildCardItem(ProductModel product) {
     return Container(
       height: 130,
       width: double.infinity,
       padding: const EdgeInsets.all(8),
-      color: AppColors.lime,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+      ),
       child: Row(
         children: [
           IconButton(
@@ -50,14 +145,14 @@ class CartPage extends StatelessWidget {
             color: AppColors.red,
           ),
           Container(
-              width: 100,
-              height: 100,
-              decoration: BoxDecoration(
-                color: AppColors.lightgrey,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Image.network(
-                  "https://assets.nintendo.com/image/upload/f_auto/q_auto/dpr_1.5/c_scale,w_500/ncom/en_US/switch/site-design-update/photo01")),
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              color: AppColors.lightgrey,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Image.network(product.imageUrl),
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Padding(
@@ -67,7 +162,7 @@ class CartPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Product title",
+                    product.title,
                     maxLines: 2,
                     style: TextStyle(
                       color: AppColors.black,
@@ -79,7 +174,7 @@ class CartPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Product",
+                        "\$${product.amount * product.quantity}",
                         style: TextStyle(
                           color: AppColors.black,
                           fontSize: 12,
@@ -98,10 +193,10 @@ class CartPage extends StatelessWidget {
                               iconSize: 14,
                             ),
                           ),
-                          const SizedBox(
+                          SizedBox(
                             width: 40,
                             child: Center(
-                              child: Text("1"),
+                              child: Text(product.quantity.toString()),
                             ),
                           ),
                           CircleAvatar(

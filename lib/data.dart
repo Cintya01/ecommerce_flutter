@@ -3,7 +3,7 @@ List<Map<String, dynamic>> productJsonData = [
     "id": 1,
     "title": "Apple Iphone 15 Pro Max",
     "amount": 1200,
-    "product": "Smartphone",
+    "category": "Smartphone",
     "description":
         "The iPhone 15 Pro Max is the latest and greatest from Apple. It features a 6.7-inch Super Retina XDR display, the A16 Bionic chip, and a Pro camera system with 12MP Ultra Wide, Wide, and Telephoto cameras.",
     "image_url":
@@ -13,7 +13,7 @@ List<Map<String, dynamic>> productJsonData = [
     "id": 2,
     "title": "Nintendo Switch Oled",
     "amount": 800,
-    "product": "Console",
+    "category": "Console",
     "description":
         "The Nintendo Switch Oled is the latest version of the Nintendo Switch. It features a 7-inch OLED screen, a wide adjustable stand, a dock with a wired LAN port, 64GB of internal storage, and enhanced audio.",
     "image_url":
@@ -23,7 +23,7 @@ List<Map<String, dynamic>> productJsonData = [
     "id": 3,
     "title": "Samsung Buds Pro",
     "amount": 500,
-    "product": "Headphones",
+    "category": "Headphones",
     "description":
         "The Samsung Galaxy Buds Pro are true wireless earbuds that combine crystal-clear sound with unprecedented control, making it effortless to elevate everyday moments.",
     "image_url":
@@ -33,7 +33,7 @@ List<Map<String, dynamic>> productJsonData = [
     "id": 4,
     "title": "PlayStation 5",
     "amount": 700,
-    "product": "Console",
+    "category": "Console",
     "description":
         "The PlayStation 5 is the latest console from Sony. It features a custom 825GB SSD, a powerful custom AMD GPU, and an innovative new controller with haptic feedback and adaptive triggers.",
     "image_url":
@@ -43,7 +43,7 @@ List<Map<String, dynamic>> productJsonData = [
     "id": 5,
     "title": "Apple Iphone 11 Pro Max",
     "amount": 500,
-    "product": "Smartphone",
+    "category": "Smartphone",
     "description":
         "The iPhone 11 Pro Max is the latest and greatest from Apple. It features a 6.5-inch Super Retina XDR display, the A13 Bionic chip, and a Pro camera system with 12MP Ultra Wide, Wide, and Telephoto cameras.",
     "image_url":
@@ -53,7 +53,7 @@ List<Map<String, dynamic>> productJsonData = [
     "id": 6,
     "title": "Teclado Logitech G715",
     "amount": 150,
-    "product": "PC Accesory",
+    "category": "PC Accesory",
     "description":
         "The Logitech G715 is a high-performance gaming keyboard that features LIGHTSPEED wireless technology, advanced Romer-G mechanical switches, and customizable RGB lighting.",
     "image_url":

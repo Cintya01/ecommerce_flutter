@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecommerce_refuerzo_bloc/data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ecommerce_refuerzo_bloc/model/product_model.dart';
@@ -25,19 +27,66 @@ class EcommerceBloc extends Bloc<EcommerceEvent, EcommerceState> {
         id: json["id"].toString(),
         title: json["title"],
         amount: double.parse(json["amount"].toString()),
-        product: json["product"],
-        description: json["description"],
         imageUrl: json["image_url"],
       );
     }).toList();
 
     emit(state.copyWith(
-      homeScreenState: HomeScreenState.sucess,
+      homeScreenState: HomeScreenState.success,
       products: products,
     ));
   }
 
-  void _onAddToCartEvent(AddToCartEvent event, Emitter<EcommerceState> emit) {}
+  void _onAddToCartEvent(AddToCartEvent event, Emitter<EcommerceState> emit) {
+    final List<ProductModel> newCart = [];
+
+    // final exist = state.cart.firstWhere(
+    //   (p) => p.id == event.product.id,
+    //   orElse: () => event.product.copyWith(quantity: 0),
+    // );
+
+    // final updateCart = state.cart.map((p) {
+    //   if (p.id == event.product.id) {
+    //     return p.copyWith(quantity: p.quantity + 1);
+    //   }
+    //   return p;
+    // }).toList();
+
+    // if (exist.quantity == 0) {
+    //   updateCart.add(event.product.copyWith(quantity: 1));
+    // }
+    newCart.add(event.product);
+
+    emit(state.copyWith(cart: newCart));
+    log(state.cart.toString());
+    log(state.cart.length.toString());
+  }
+
+  // void _onAddToCartEvent(AddToCartEvent event, Emitter<EcommerceState> emit) {
+  //   // Crea una copia del carrito existente.
+  //   final List<ProductModel> newCart = List.from(state.cart);
+
+  //   // Verifica si el producto ya existe en el carrito.
+  //   final productIndex = newCart.indexWhere((p) => p.id == event.product.id);
+
+  //   if (productIndex != -1) {
+  //     // Si ya existe, actualiza su cantidad.
+  //     final updatedProduct = newCart[productIndex].copyWith(
+  //       quantity: newCart[productIndex].quantity + 1,
+  //     );
+  //     newCart[productIndex] = updatedProduct;
+  //   } else {
+  //     // Si no existe, agrega el producto con cantidad inicial 1.
+  //     newCart.add(event.product.copyWith(quantity: 1));
+  //   }
+
+  //   // Emite el nuevo estado con el carrito actualizado.
+  //   emit(state.copyWith(cart: newCart));
+
+  //   // Logs para depuración.
+  //   log("Carrito actualizado: ${state.cart}");
+  //   log("Cantidad de productos en el carrito: ${state.cart.length}");
+  // }
 
   void _onUpdateQuantityEvent(
       UpdateQuantityEvent event, Emitter<EcommerceState> emit) {}

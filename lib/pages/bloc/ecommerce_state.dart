@@ -3,8 +3,8 @@ part of 'ecommerce_bloc.dart';
 enum HomeScreenState {
   none,
   loading,
-  sucess,
-  error,
+  success,
+  failure,
 }
 
 class EcommerceState extends Equatable {
@@ -20,7 +20,10 @@ class EcommerceState extends Equatable {
 
   factory EcommerceState.initial() {
     return const EcommerceState(
-        products: [], cart: [], homeScreenState: HomeScreenState.none);
+      products: [],
+      cart: [],
+      homeScreenState: HomeScreenState.none,
+    );
   }
 
   EcommerceState copyWith({

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ecommerce_refuerzo_bloc/pages/bloc/ecommerce_bloc.dart';
 import 'package:ecommerce_refuerzo_bloc/pages/cart_page.dart';
 import 'package:ecommerce_refuerzo_bloc/pages/home_page.dart';
@@ -48,45 +50,35 @@ class _MainPageState extends State<MainPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 _itemBottomMenu(
-                  onTap: () {
-                    onItemTapped(0);
-                  },
+                  onTap: () => onItemTapped(0),
                   isActive: selectedIndex == 0,
-                  icon: Icons.home,
                   title: "Home",
+                  icon: Icons.home,
                 ),
                 _itemBottomMenu(
-                  onTap: () {
-                    onItemTapped(1);
-                  },
+                  onTap: () => onItemTapped(1),
                   isActive: selectedIndex == 1,
-                  icon: Icons.search,
                   title: "Catalog",
+                  icon: Icons.search,
                 ),
                 _itemBottomMenu(
-                  onTap: () {
-                    onItemTapped(2);
-                  },
+                  onTap: () => onItemTapped(2),
                   isActive: selectedIndex == 2,
                   isCartItem: true,
-                  icon: Icons.shopping_bag_outlined,
                   title: "Cart",
+                  icon: Icons.shopping_bag_outlined,
                 ),
                 _itemBottomMenu(
-                  onTap: () {
-                    onItemTapped(3);
-                  },
+                  onTap: () => onItemTapped(3),
                   isActive: selectedIndex == 3,
-                  icon: Icons.favorite_border_rounded,
-                  title: "Favorites",
+                  title: "Favorite",
+                  icon: Icons.favorite_border,
                 ),
                 _itemBottomMenu(
-                  onTap: () {
-                    onItemTapped(4);
-                  },
+                  onTap: () => onItemTapped(4),
                   isActive: selectedIndex == 4,
-                  icon: Icons.person,
                   title: "Profile",
+                  icon: Icons.person,
                 ),
               ],
             )));
@@ -101,7 +93,7 @@ class _MainPageState extends State<MainPage> {
   }) {
     return GestureDetector(
       onTap: onTap,
-      child: Stack(children: [
+      child: Stack(clipBehavior: Clip.none, children: [
         Column(children: [
           Icon(
             icon,
@@ -115,15 +107,15 @@ class _MainPageState extends State<MainPage> {
         if (isCartItem)
           BlocBuilder<EcommerceBloc, EcommerceState>(
             builder: (context, state) {
+              log("Estado del carrito en el BlocBuilder: ${state.cart.length}");
               if (state.cart.isEmpty) {
                 return const SizedBox.shrink();
               }
-              final total = state.cart
-                  .fold(0, (prev, element) => prev + element.quantity);
-
+              final total = state.cart.fold(0, (sum, p) => sum + p.quantity);
+              log("Estado del carrito en total: $total");
               return Positioned(
-                right: 0,
-                top: 0,
+                top: -5,
+                right: -5,
                 child: Container(
                   width: 16,
                   height: 16,
@@ -136,8 +128,8 @@ class _MainPageState extends State<MainPage> {
                       total.toString(),
                       style: TextStyle(
                         color: AppColors.white,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
+                        fontSize: 9,
+                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ),
