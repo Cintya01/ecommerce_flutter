@@ -266,29 +266,3 @@ class CartPage extends StatelessWidget {
 
 
 
-
-          // Container(
-          //   margin: EdgeInsets.only(top: heightDirectionContainer * 0.7 + 30),
-          //   child: _cartSection(),
-          // ),
-          // Positioned(
-          //   bottom: 0,
-          //   left: 16,
-          //   right: 16,
-          //   child: ElevatedButton(
-          //     onPressed: () {},
-          //     style: ButtonStyle(
-          //       minimumSize: WidgetStateProperty.all(Size(size.width, 40)),
-          //       backgroundColor: WidgetStateProperty.all(AppColors.lime),
-          //       shape: WidgetStateProperty.all(
-          //         RoundedRectangleBorder(
-          //           borderRadius: BorderRadius.circular(8),
-          //         ),
-          //       ),
-          //     ),
-          //     child: Text(
-          //       "Checkout",
-          //       style: TextStyle(color: AppColors.black),
-          //     ),
-          //   ),
-          // )

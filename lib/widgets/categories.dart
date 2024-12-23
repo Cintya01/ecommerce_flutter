@@ -1,6 +1,8 @@
+import 'package:ecommerce_refuerzo_bloc/pages/bloc/ecommerce_bloc.dart';
 import 'package:ecommerce_refuerzo_bloc/widgets/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart';
+import 'package:provider/provider.dart';
 
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget({super.key});
@@ -47,36 +49,39 @@ class CategoriesWidget extends StatelessWidget {
       const SizedBox(height: 16),
       Padding(
         padding: const EdgeInsets.only(left: 16, right: 16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            categoryCard(
-              title: "Phones",
-              image: "boton-movil",
-              isActive: true,
-              press: () {},
-            ),
-            categoryCard(
-              title: "Headphones",
-              image: "auriculares",
-              press: () {},
-            ),
-            categoryCard(
-              title: "Accessories",
-              image: "altavoz-de-la-computadora",
-              press: () {},
-            ),
-            categoryCard(
-              title: "Console",
-              image: "controlador-de-consola",
-              press: () {},
-            ),
-            categoryCard(
-              title: "Games",
-              image: "dados-d6",
-              press: () {},
-            ),
-          ],
+        child: GestureDetector(
+          onTap: () {},
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              categoryCard(
+                title: "Phones",
+                image: "boton-movil",
+                isActive: true,
+                press: () {},
+              ),
+              categoryCard(
+                title: "Headphones",
+                image: "auriculares",
+                press: () {},
+              ),
+              categoryCard(
+                title: "Accessories",
+                image: "altavoz-de-la-computadora",
+                press: () {},
+              ),
+              categoryCard(
+                title: "Console",
+                image: "controlador-de-consola",
+                press: () {},
+              ),
+              categoryCard(
+                title: "Games",
+                image: "dados-d6",
+                press: () {},
+              ),
+            ],
+          ),
         ),
       ),
     ]);
@@ -92,13 +97,13 @@ categoryCard({
   return Column(
     children: [
       CircleAvatar(
-        backgroundColor: AppColors.lightgrey,
-        radius: 20,
+        backgroundColor: isActive ? AppColors.lime : AppColors.lightgrey,
+        radius: 25,
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Image(
             image: Svg("assets/icons/$image.svg"),
-            color: AppColors.black,
+            color: isActive ? AppColors.white : AppColors.black,
           ),
         ),
       ),
@@ -107,7 +112,7 @@ categoryCard({
           style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.bold,
-              color: isActive ? AppColors.lime : AppColors.black)),
+              color: isActive ? AppColors.black : AppColors.grey)),
     ],
   );
 }

@@ -12,7 +12,7 @@ class EcommerceBloc extends Bloc<EcommerceEvent, EcommerceState> {
   EcommerceBloc() : super(EcommerceState.initial()) {
     on<LoadProductsEvent>(_onLoadProductsEvent);
     on<AddToCartEvent>(_onAddToCartEvent);
-    //on<UpdateCartQuantityEvent>(_onUpdateQuantityEvent);
+    // on<FilteredProductEvent>(_filteredProductEvent);
     on<IncreaseQuantityEvent>(_onIncreaseQuantityEvent);
     on<DecreaseQuantityEvent>(_onDecreaseQuantityEvent);
     on<RemoveFromCartEvent>(_onRemoveFromCartEvent);
@@ -30,6 +30,7 @@ class EcommerceBloc extends Bloc<EcommerceEvent, EcommerceState> {
         title: json["title"],
         amount: double.parse(json["amount"].toString()),
         imageUrl: json["image_url"],
+        category: json["category"],
       );
     }).toList();
 
@@ -60,8 +61,17 @@ class EcommerceBloc extends Bloc<EcommerceEvent, EcommerceState> {
     emit(state.copyWith(cart: updateCart));
   }
 
-  // void _onUpdateQuantityEvent(
-  //     UpdateCartQuantityEvent event, Emitter<EcommerceState> emit) {
+  // void _filteredProductEvent(
+  //     FilteredProductEvent event, Emitter<EcommerceState> emit) {
+  //   final filteredproduct = state.products
+  //       .where(
+  //         (pr) => pr.category == event.filter,
+  //       )
+  //       .toList();
+
+  //   emit(state.copyWith(
+  //     products: filteredproduct,
+  //   ));
   // }
 
   void _onIncreaseQuantityEvent(

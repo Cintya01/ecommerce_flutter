@@ -15,7 +15,11 @@ class AddToCartEvent extends EcommerceEvent {
   const AddToCartEvent({required this.product});
 }
 
-//class UpdateCartQuantityEvent extends EcommerceEvent {}
+// class FilteredProductEvent extends EcommerceEvent {
+//   final String filter;
+//   const FilteredProductEvent({required this.filter});
+// }
+
 class IncreaseQuantityEvent extends EcommerceEvent {
   final ProductModel product;
 
