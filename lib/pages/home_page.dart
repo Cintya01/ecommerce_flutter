@@ -73,7 +73,8 @@ class Body extends StatelessWidget {
                         size: Size(10, 10)),
                     color: AppColors.black,
                   )),
-            )
+            ),
+            const SizedBox(width: 16),
           ],
         ),
         body: Container(
