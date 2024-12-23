@@ -41,59 +41,87 @@ class CartPage extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          Container(
-            height: heightDirectionContainer,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(16),
-                bottomRight: Radius.circular(16),
+          //direccion
+          Positioned(
+            child: Container(
+              height: heightDirectionContainer,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(16),
+                  bottomRight: Radius.circular(16),
+                ),
               ),
-            ),
-          ),
-          Container(
-            height: heightDirectionContainer * 0.7,
-            margin: const EdgeInsets.only(
-              top: 8,
-              right: 16,
-              left: 16,
-            ),
-            decoration: BoxDecoration(
-              color: AppColors.lightgrey,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+              child: Container(
+                margin: const EdgeInsets.only(
+                  top: 8,
+                  bottom: 16,
+                  right: 16,
+                  left: 16,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.lightgrey,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(
-                        Icons.location_on_outlined,
-                        color: AppColors.grey,
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            color: AppColors.grey,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(
+                            "92 High Street, London",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 13),
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 8),
-                      const Text(
-                        "92 High Street, London",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 13),
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        color: AppColors.grey,
                       ),
                     ],
                   ),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: AppColors.grey,
-                  ),
-                ],
+                ),
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: heightDirectionContainer * 0.7 + 30),
-            child: _cartSection(),
+          //card productos
+          Positioned(
+            child: Container(
+              margin: EdgeInsets.only(top: heightDirectionContainer * 0.7 + 30),
+              child: _cartSection(),
+            ),
           ),
+          //boton checkout
+          Positioned(
+            bottom: 0,
+            left: 16,
+            right: 16,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                minimumSize: WidgetStateProperty.all(Size(size.width, 40)),
+                backgroundColor: WidgetStateProperty.all(AppColors.lime),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+              ),
+              child: Text(
+                "Checkout",
+                style: TextStyle(color: AppColors.black),
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -113,7 +141,6 @@ class CartPage extends StatelessWidget {
             child: ListView.builder(
               itemCount: state.cart.length,
               itemBuilder: (context, index) {
-                log("Estado del carrito en el BlocBuilder Cart Page: ${state.cart.length}");
                 if (state.cart.isEmpty) {
                   return const SizedBox.shrink();
                 }
@@ -236,3 +263,32 @@ class CartPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
+          // Container(
+          //   margin: EdgeInsets.only(top: heightDirectionContainer * 0.7 + 30),
+          //   child: _cartSection(),
+          // ),
+          // Positioned(
+          //   bottom: 0,
+          //   left: 16,
+          //   right: 16,
+          //   child: ElevatedButton(
+          //     onPressed: () {},
+          //     style: ButtonStyle(
+          //       minimumSize: WidgetStateProperty.all(Size(size.width, 40)),
+          //       backgroundColor: WidgetStateProperty.all(AppColors.lime),
+          //       shape: WidgetStateProperty.all(
+          //         RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.circular(8),
+          //         ),
+          //       ),
+          //     ),
+          //     child: Text(
+          //       "Checkout",
+          //       style: TextStyle(color: AppColors.black),
+          //     ),
+          //   ),
+          // )
